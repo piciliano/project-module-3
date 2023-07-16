@@ -7,6 +7,7 @@ const PatientSchema = new mongoose.Schema({
     demands: { type: String, required: true},
     personalAnnotations: { type: String, required: true},
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
+    timelines: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Timeline"}]
 },
     { timestamps: true}
 );

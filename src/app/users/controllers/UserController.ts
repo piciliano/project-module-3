@@ -15,7 +15,7 @@ class UserController {
     } catch (error: any) {
       return res.status(400).json({errors: error.errors});
     }
-    const result = await this.service.create(body);
+    const result = await this.service.create(body) as any;
     if ("error" in result) {
       return res.status(result.status).json(result);
     }
@@ -48,7 +48,7 @@ class UserController {
     if ("error" in result) {
       return res.status(result.status).json(result);
     }
-    return res.status(200).json({message:"Usuário deletado!"});
+    return res.status(200).json({message:"Paciente deletado!"});
   }
 }
 

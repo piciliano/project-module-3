@@ -21,10 +21,6 @@ class UserService {
         return { data: createdUser, message: "Usuário criado com sucesso!", status: 200 };
       } 
 
-      //   else {
-      //   throw new Error('Senha inválida ou em branco');
-      // }
-
     } catch (error) {
       console.log("Erro na criação de usuário", error);
       return { error: true, message: "Internal server error", status: 500 };

@@ -7,7 +7,7 @@ const router = Router()
 
 router.use("/auth", authRouter)
 router.use("/User", userRouter)
-router.use("/User", patientRouter)
+router.use("/Patient", patientRouter)
 
 
 export { router }
