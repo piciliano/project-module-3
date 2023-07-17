@@ -25,17 +25,15 @@ class PatientRepository {
   }
 
   async pushTimeline(patient_id: string, timeline_id: string) {
-    return this.model
-      .findByIdAndUpdate(
+    return this.model.findByIdAndUpdate(
         patient_id,
         {
           $push: {
             timelines: timeline_id,
           },
         },
-        { new: true }
-      )
-      .populate("timelines");
+           { new: true }
+      ).populate("timelines");
   }
 }
 
