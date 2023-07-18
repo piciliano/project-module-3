@@ -28,6 +28,58 @@ class TimelineService {
             }
         }
     }
+
+    async findByTimelineByPatientId(pacient_id: string) {
+        try {
+            
+            return this.repository.findByPatientId(pacient_id)
+        } catch (error) {
+            
+            return {
+                error: true,
+                message: "Internal server error",
+                status: 500,
+            }
+        }
+    }
+
+    async findIdTimeline(id: string) {
+        try {
+            return this.repository.findByid(id)
+        } catch (error) {
+            return {
+                error: true,
+                message: "Internal server error",
+                status: 500,
+            }
+        }
+    }
+
+    async uptadeTimelineID(id: string, payload: CreateTimelineDTO) {
+        try {
+          const TimelineUpdated = await this.repository.updateTimeline(id, payload);
+    
+          return {
+            message: "Timeline updated",
+            statusCode: 200,
+            data: TimelineUpdated,
+          };
+        } catch (error: any) {
+          return {
+            message: error.message || "Internal server error",
+            statusCode: error.message ? 400 : 500,
+            data: null,
+          };
+        }
+      }
+
+      async delete(id: string) {
+        try {
+            return this.repository.deleteTimeline(id)
+        } catch (error) {
+            return { error: true, message: "Internal server error", status: 500 }
+        }
+      }
 }
 
 export { TimelineService }

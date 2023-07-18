@@ -19,6 +19,23 @@ class TimelineRepository {
             { new: true}
         ).populate("ocurrences")
     }
+
+    async findByPatientId(pacient_id: string) {
+        
+        return this.model.find({ pacient_id: pacient_id })
+    }
+
+    async findByid(id: string) {
+        return this.model.findById(id)
+    }
+
+    async updateTimeline(id: string, payload: any){
+        return this.model.findByIdAndUpdate(id, payload, { new: true })
+    }
+
+    async deleteTimeline(id: string) {
+        return this.model.findByIdAndDelete(id)
+    }
 }
 
 export { TimelineRepository }
