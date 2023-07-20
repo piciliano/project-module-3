@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true},
     password: { type: String, required: true},
     patient: [{ type: Schema.Types.ObjectId, ref: 'Patient' }],
+    photo: { type: mongoose.SchemaTypes.ObjectId, ref: "Files"}
 },
     { timestamps: true }
 )

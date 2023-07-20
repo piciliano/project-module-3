@@ -1,21 +1,31 @@
-import { CreateUserDTO } from "../dtos/createUserDto";
+import { deletePatientsAndTimelinesForUsers} from "../../../utils/delete-cascade";
+import { CreateFileDto } from "../../file/dtos/CreateFileDto";
+import { FilesRepository } from "../../file/repositories/FilesRepository";
+import { PatientModel } from "../../patient/entities/Patient";
+import { CreateUserDTO, CreateUserServiceDTO } from "../dtos/createUserDto";
 import { UserRepository } from "../repositories/UserRepositories";
 import bcrypt from "bcrypt"
 
 class UserService {
-  constructor(private repository: UserRepository) {}
+  constructor(private repository: UserRepository, private filesrepository: FilesRepository
+    ) {}
 
-  async create(user: CreateUserDTO) {
+  async create(user: CreateUserServiceDTO) {
     try {
+
+
+      const photo = await this.filesrepository.create(user.photo)
+
       const existingUser = await this.repository.findByEmail(user.email);
       if (existingUser) {
         return { message: "E-mail já existe!", status: 400 };
       }
-      
+
       if (typeof user.password === 'string' && user.password.length > 0) {
         const payload = {
           ...user,
-          password: bcrypt.hashSync(user.password, 8)
+          password: bcrypt.hashSync(user.password, 8),
+          photo: photo.id
         };
         const createdUser = await this.repository.create(payload);
         return { data: createdUser, message: "Usuário criado com sucesso!", status: 200 };
@@ -28,6 +38,14 @@ class UserService {
   }
   async delete(id: string) {
     try {
+      const user = await this.repository.findById(id)
+      const patients = user?.patient
+      if(patients && patients.length > 0) {
+        for (const patient of patients){
+          await deletePatientsAndTimelinesForUsers(user._id)
+        }
+        await PatientModel.deleteMany({ _id: { $in: patients } }).exec();
+      }
       return this.repository.delete(id);
     } catch (error) {
       return { error: true, message: "Internal server error", status: 500 };

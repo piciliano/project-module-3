@@ -1,10 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
-const OccurrenceSchema: Schema = new mongoose.Schema({
+const OccurrenceSchema = new mongoose.Schema({
   name: { type: String, required: true },
   content: { type: String, required: true },
   kind: { type: String, required: true },
-  files: [{ type: mongoose.SchemaTypes.ObjectId, ref: "files"}],
+  files: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Files"}],
+  timeline_id: { type: Schema.Types.ObjectId, ref: 'Timeline'}
 },
     { timestamps: true }
 );

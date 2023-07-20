@@ -20,6 +20,10 @@ class UserRepository {
     return this.model.findOne({ email });
   }
 
+  async findById(id: string) {
+    return this.model.findById(id);
+  }
+
   async updateUser(id: string, payload: CreateUserDTO) {
     return this.model.findByIdAndUpdate(id, payload, { new: true });
   }

@@ -1,3 +1,5 @@
+import { deleteOccurrencesAndTimeline } from "../../../utils/delete-cascade";
+import { OccurrenceModel } from "../../occurrece/entities/Occurrence";
 import { PatientRepository } from "../../patient/repositories/PatientRepository";
 import { CreateTimelineDTO } from "../dtos/CreateTimelineDto";
 import { TimelineRepository } from "../repositories/TimelineRepository";
@@ -9,8 +11,7 @@ class TimelineService {
     async create(timeline: CreateTimelineDTO) {
         try {
 
-           const timelineCreated = await this.repository.create(timeline)
-
+            const timelineCreated = await this.repository.create(timeline)
             const pushTimeline = await this.patientRepository.pushTimeline(
             timeline.pacient_id as string,
             timelineCreated.id
@@ -73,13 +74,31 @@ class TimelineService {
         }
       }
 
-      async delete(id: string) {
+    async delete(id: string) {
         try {
-            return this.repository.deleteTimeline(id)
+          const timeline = await this.repository.findByid(id);
+          const occurrences = timeline?.ocurrences;
+
+          if (occurrences && occurrences.length > 0) {
+            for (const occurrence of occurrences) {
+              await deleteOccurrencesAndTimeline(occurrence);
+            }
+          }
+          await OccurrenceModel.deleteMany({ _id: { $in: occurrences } }).exec();
+          return this.repository.deleteTimeline(id);
         } catch (error) {
-            return { error: true, message: "Internal server error", status: 500 }
+          return { error: true, message: "Internal server error", status: 500 };
         }
       }
+        
+
+    //   async delete(id: string) {
+    //     try {
+    //         return this.repository.deleteTimeline(id)
+    //     } catch (error) {
+    //         return { error: true, message: "Internal server error", status: 500 }
+    //     }
+    //   }
 }
 
 export { TimelineService }

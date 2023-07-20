@@ -68,7 +68,7 @@ class PatientControllers {
         if ("error" in result) {
           return res.status(result.status).json(result);
         }
-        return res.status(200).json({message:"Usuário deletado!"});
+        return res.status(200).json({message:"Paciente deletado!"});
       }
 
       async update(req: Request, res: Response) {

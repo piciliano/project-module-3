@@ -1,3 +1,5 @@
+import { deleteOccurrencesForTimeline, deleteTimelinesForPatients } from "../../../utils/delete-cascade";
+import { TimelineModel } from "../../timeline/entities/Timeline";
 import { UserRepository } from "../../users/repositories/UserRepositories";
 import { CreatePatientDTO } from "../dtos/CreatePatientDto";
 import { PatientRepository } from "../repositories/PatientRepository";
@@ -42,14 +44,25 @@ class PatientService {
     }
   }
   
+
   async delete(id: string) {
     try {
+      const patient = await this.repository.findById(id);
+      const timelines = patient?.timelines;
+  
+      if (timelines && timelines.length > 0) {
+        for (const timeline of timelines) {
+          await deleteTimelinesForPatients(timeline)
+          await deleteOccurrencesForTimeline(timeline);
+        }
+        await TimelineModel.deleteMany({ _id: { $in: timelines } }).exec();
+      }
       return this.repository.delete(id);
     } catch (error) {
       return { error: true, message: "Internal server error", status: 500 };
     }
   }
-
+  
   async updateUser(id: string, payload: CreatePatientDTO) {
     try {
       const userUpdate = await this.repository.updateUser(id, payload)
