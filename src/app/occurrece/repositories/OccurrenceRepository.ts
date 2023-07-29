@@ -23,9 +23,6 @@ class OccurrenceRepository {
     async deleteOccurrence(id: string) {
         return this.model.findByIdAndDelete(id)
     }
-
 }
-
-
 
 export { OccurrenceRepository }

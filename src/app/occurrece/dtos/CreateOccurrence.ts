@@ -1,5 +1,5 @@
 interface CreateOccurrenceDTO {
-    name: string
+    title: string
     content: string
     kind: string
     timeline_id?: string

@@ -12,7 +12,7 @@ const userController = UserModule.build().controller;
 
 userRouter.post("/", upload.single("photo"), userController.create.bind(userController))
 userRouter.patch("/:id", EnsureAuthenticate.excute, userController.update.bind(userController))
-userRouter.delete("/:id", userController.delete.bind(userController))
-userRouter.post("/:user_id/Patient", patientController.create.bind(patientController))
+userRouter.delete("/:id", EnsureAuthenticate.excute, userController.delete.bind(userController))
+userRouter.post("/:user_id/Patient", EnsureAuthenticate.excute, patientController.create.bind(patientController))
 
 export { userRouter }
