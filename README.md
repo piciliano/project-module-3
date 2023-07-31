@@ -84,14 +84,14 @@ createdAt |	Date |	Default |	Não |	Data da criação do registro
 updatedAt |	Date |	Default |	Não |	Data da atualizacão do registro
 
 
-Para rodar o projeto, basta clonar o repositorio do git, usar o comando npm i, para instalar as dependências essenciais do projeto, conforme expecificado no arquivo package.json, é importante ter o Node.js instalado na máquina.
-Será necessário Definir variávies de ambiente, para definir uma variável de ambiente, é necessário criar um arquivo .env um arquivo .env.example pode ser encontrado no diretório principal do projeto com as informações para auxiliar na etapa, sendo elas:
+Para rodar o projeto, basta clonar o repositorio do git, usar o comando npm i, para instalar as dependências essenciais do projeto, conforme expecificado no arquivo package.json, é importante ter o Node.js instalado na máquina.<br />
+Será necessário Definir variávies de ambiente, para definir uma variável de ambiente, é necessário criar um arquivo .env um arquivo .env.example pode ser encontrado no diretório principal do projeto com as informações para auxiliar na etapa, sendo elas:<br />
 
-URL: endereço do bando de dados MongoDB
-PORT: número da porta em que o servidor express será lançado
-SECRE_KEY: chave privativa utilizada com a biblioteca JWT para tokens de autenticação.
+URL: endereço do bando de dados MongoDB<br />
+PORT: número da porta em que o servidor express será lançado<br />
+SECRE_KEY: chave privativa utilizada com a biblioteca JWT para tokens de autenticação.<br />
 
-em seguida, um npm run dev irá rodar o projeto.
+em seguida, um npm run dev irá rodar o projeto.<br />
 
 
 
