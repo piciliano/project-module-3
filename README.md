@@ -38,7 +38,7 @@ Remover uma timeline pelo identificador(ID):white_check_mark:<br />
 
 Funcionalidade deletar em cascata, funcional.
 
-Entidade "Usuário":
+Entidade "Users":
 
 Nome | Tipo |	Obrigatório |	Único |	Descrição
 | --- | --- | --- | --- | --- |
